@@ -11,6 +11,10 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
+  {
+    path: 'vista1',
+    loadChildren: () => import('./vista1/vista1.module').then( m => m.Vista1PageModule)
+  },
 ];
 
 @NgModule({
