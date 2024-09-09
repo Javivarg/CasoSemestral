@@ -13,7 +13,7 @@ export class HomePage {
 
   // Diccionario Usuario
   private usuario = {
-    email: 'admin@admin.com',
+    email: 'admin',
     password: 'admin',
     nombre: 'admin',
     apellido: 'admin'
