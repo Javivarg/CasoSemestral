@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router'; // Importar para capturar los parámetros
+import { ActivatedRoute } from '@angular/router'; 
 
 @Component({
   selector: 'app-vista1',

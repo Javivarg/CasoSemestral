@@ -11,7 +11,7 @@ export class HomePage {
   email: string = '';
   password: string = '';
 
-  // Diccionario de autenticación
+  // Diccionario Usuario
   private usuario = {
     email: 'admin@admin.com',
     password: 'admin',
@@ -21,10 +21,10 @@ export class HomePage {
 
   constructor(private navCtrl: NavController, private alertController: AlertController) {}
 
-  // Método para iniciar sesión
+  // Funcion inicio de sesion
   async iniciarSesion() {
     if (this.email === this.usuario.email && this.password === this.usuario.password) {
-      // Si el email y la contraseña son correctos, redirigir a la vista1 y pasar nombre y apellido
+      // Validador
       this.navCtrl.navigateForward('/vista1', {
         queryParams: {
           nombre: this.usuario.nombre,
@@ -32,7 +32,6 @@ export class HomePage {
         }
       });
     } else {
-      // Si los datos no son correctos, mostrar una alerta
       const alert = await this.alertController.create({
         header: 'Error',
         message: 'Usuario o contraseña incorrectos.',
