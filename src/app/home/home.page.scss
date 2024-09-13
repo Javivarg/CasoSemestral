@@ -25,3 +25,8 @@
 #container a {
   text-decoration: none;
 }
+
+.imagen-personalizada {
+  width: 100%; /* Para que la imagen ocupe todo el ancho del contenedor */
+  height: auto; /* Ajusta la altura automáticamente */
+}
