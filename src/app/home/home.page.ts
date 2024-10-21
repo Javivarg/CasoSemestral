@@ -35,7 +35,7 @@ export class HomePage {
     if (usuario) {
       // Guardar datos en LocalStorage
       localStorage.setItem('usuario', JSON.stringify(usuario));
-      this.navCtrl.navigateForward('/vista1', {
+      this.navCtrl.navigateForward('/tabs/vista1', {
         queryParams: {
           nombre: usuario.nombre,
           apellido: usuario.apellido

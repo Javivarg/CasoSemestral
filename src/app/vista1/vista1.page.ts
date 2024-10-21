@@ -10,7 +10,8 @@ export class Vista1Page implements OnInit {
   nombre: string = '';
   apellido: string = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) {
+  }
 
   ngOnInit() {
     const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
@@ -23,8 +24,4 @@ export class Vista1Page implements OnInit {
     }
   }
 
-  recuperar() {
-    localStorage.removeItem('usuario'); // Elimina el usuario de LocalStorage
-    this.router.navigate(['/home']); // Redirige a la página de inicio
-  }
 }
