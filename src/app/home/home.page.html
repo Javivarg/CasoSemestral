@@ -10,6 +10,18 @@
     <h2>Iniciar Sesión</h2>
     <p>Por favor ingrese sus datos</p>
   </div>
+  <ion-item>
+    <ion-label>Selecciona Usuario</ion-label>
+    <ion-select [(ngModel)]="selectedUser">
+      <ion-select-option *ngFor="let user of lista" [value]="user">
+        {{ user.email }}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+  <div *ngIf="selectedUser">
+    <p>Email: {{ selectedUser.email }}</p>
+    <p>Contraseña: {{ selectedUser.password }}</p>
+  </div>
   <br><br>
   <ion-list>
     <ion-input
@@ -33,16 +45,5 @@
     <ion-button expand="block" color="medium" routerLink="/reset-password">Restablecer Contraseña</ion-button>
   </ion-list>
   <br><br>
-  <ion-item>
-    <ion-label>Selecciona Usuario</ion-label>
-    <ion-select [(ngModel)]="selectedUser">
-      <ion-select-option *ngFor="let user of lista" [value]="user">
-        {{ user.email }}
-      </ion-select-option>
-    </ion-select>
-  </ion-item>
-  <div *ngIf="selectedUser">
-    <p>Email: {{ selectedUser.email }}</p>
-    <p>Contraseña: {{ selectedUser.password }}</p>
-  </div>
+  
 </ion-content>

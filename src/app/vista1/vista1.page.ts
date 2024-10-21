@@ -22,4 +22,9 @@ export class Vista1Page implements OnInit {
       this.router.navigate(['/home']);
     }
   }
+
+  recuperar() {
+    localStorage.removeItem('usuario'); // Elimina el usuario de LocalStorage
+    this.router.navigate(['/home']); // Redirige a la página de inicio
+  }
 }
