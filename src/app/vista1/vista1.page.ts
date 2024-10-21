@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router'; 
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-vista1',
@@ -10,13 +10,16 @@ export class Vista1Page implements OnInit {
   nombre: string = '';
   apellido: string = '';
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private router: Router) {}
 
   ngOnInit() {
-    // Capturar los parámetros de la navegación
-    this.route.queryParams.subscribe(params => {
-      this.nombre = params['nombre'];
-      this.apellido = params['apellido'];
-    });
+    const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
+    if (usuario && usuario.email) {
+      this.nombre = usuario.nombre;
+      this.apellido = usuario.apellido;
+    } else {
+      // Redirige al usuario si no hay información en LocalStorage
+      this.router.navigate(['/home']);
+    }
   }
 }

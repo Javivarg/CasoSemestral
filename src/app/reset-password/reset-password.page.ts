@@ -12,16 +12,21 @@ export class ResetPasswordPage {
 
   constructor(
     private alertController: AlertController,
-    private router: Router 
+    private router: Router
   ) {}
 
+  /* Funcion para simular la recuperacion de contraseña */
   async resetPassword() {
-    if (this.email) {
-      // Mensaje restablecer contraseña 
+    if (this.email && this.email.includes('@')) {
       const alert = await this.alertController.create({
         header: 'Correo Enviado',
         message: 'Si este correo está registrado, recibirás un enlace para restablecer la contraseña.',
-        buttons: ['OK']
+        buttons: [{
+          text: 'OK',
+          handler: () => {
+            this.router.navigate(['/home']);
+          }
+        }]
       });
       await alert.present();
     } else {

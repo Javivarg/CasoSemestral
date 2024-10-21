@@ -10,25 +10,35 @@ import { AlertController } from '@ionic/angular';
 export class HomePage {
   email: string = '';
   password: string = '';
+  selectedUser: any;
 
-  // Diccionario Usuario
-  private usuario = {
-    email: 'admin',
-    password: 'admin',
-    nombre: 'admin',
-    apellido: 'admin'
-  };
+  public lista = [
+    {
+      nombre: 'javier',
+      apellido: 'Vargas',
+      email: 'javier@gmail.com',
+      password: 'hola',
+    },
+    {
+      email: 'admin',
+      password: 'admin',
+      nombre: 'admin',
+      apellido: 'admin'
+    }
+  ];
 
   constructor(private navCtrl: NavController, private alertController: AlertController) {}
 
-  // Funcion inicio de sesion
   async iniciarSesion() {
-    if (this.email === this.usuario.email && this.password === this.usuario.password) {
-      // Validador
+    const usuario = this.lista.find(user => user.email === this.email && user.password === this.password);
+
+    if (usuario) {
+      // Guardar datos en LocalStorage
+      localStorage.setItem('usuario', JSON.stringify(usuario));
       this.navCtrl.navigateForward('/vista1', {
         queryParams: {
-          nombre: this.usuario.nombre,
-          apellido: this.usuario.apellido
+          nombre: usuario.nombre,
+          apellido: usuario.apellido
         }
       });
     } else {
@@ -38,6 +48,19 @@ export class HomePage {
         buttons: ['OK']
       });
       await alert.present();
+    }
+  }
+
+  // Agregar una función para verificar el inicio de sesión en la inicialización del componente
+  ngOnInit() {
+    const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
+    if (usuario && usuario.email) {
+      this.navCtrl.navigateForward('/vista1', {
+        queryParams: {
+          nombre: usuario.nombre,
+          apellido: usuario.apellido
+        }
+      });
     }
   }
 }

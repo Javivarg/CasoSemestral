@@ -3,17 +3,14 @@
     <ion-title>RegistrAPP</ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content class="ion-padding">
   <img src="assets/img/R.png" alt="DUOC UC" class="imagen-personalizada">
-  <br>
-  <br>
+  <br><br>
   <div class="login-header">
     <h2>Iniciar Sesión</h2>
     <p>Por favor ingrese sus datos</p>
   </div>
-  <br>
-  <br>
+  <br><br>
   <ion-list>
     <ion-input
       fill="solid"
@@ -23,18 +20,29 @@
       errorText="Invalid User Name"
       [(ngModel)]="email"
     ></ion-input>
-    
-    <ion-input 
+    <ion-input
       type="password"
       fill="solid"
       label="password"
       labelPlacement="floating"
       helperText="Enter a valid password"
-      errorText="Invalid password" [(ngModel)]="password">
-    </ion-input>
-  
+      errorText="Invalid password"
+      [(ngModel)]="password"
+    ></ion-input>
     <ion-button expand="block" (click)="iniciarSesion()">INGRESAR</ion-button>
     <ion-button expand="block" color="medium" routerLink="/reset-password">Restablecer Contraseña</ion-button>
   </ion-list>
-  
+  <br><br>
+  <ion-item>
+    <ion-label>Selecciona Usuario</ion-label>
+    <ion-select [(ngModel)]="selectedUser">
+      <ion-select-option *ngFor="let user of lista" [value]="user">
+        {{ user.email }}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+  <div *ngIf="selectedUser">
+    <p>Email: {{ selectedUser.email }}</p>
+    <p>Contraseña: {{ selectedUser.password }}</p>
+  </div>
 </ion-content>
