@@ -3,14 +3,31 @@
     <ion-title>Vista 1</ion-title>
   </ion-toolbar>
 </ion-header>
+
 <ion-content class="ion-padding">
+  <!-- Saludo al usuario -->
   <h2>Bienvenido {{ nombre }}</h2>
+
+  <!-- Input para el nombre -->
   <ion-item>
     <ion-label position="floating">Nombre</ion-label>
     <ion-input type="text" [(ngModel)]="nombre"></ion-input>
   </ion-item>
+
+  <!-- Input para el apellido -->
   <ion-item>
     <ion-label position="floating">Apellido</ion-label>
     <ion-input type="text" [(ngModel)]="apellido"></ion-input>
   </ion-item>
+
+  <div *ngIf="weatherData" class="ion-margin-top">
+    <h3>Clima en {{ city }}</h3>
+    <ion-item>
+      <p>Temperatura: {{ weatherData.main.temp }} °C</p>
+    </ion-item>
+    <ion-item>
+      <p>Condiciones: {{ weatherData.weather[0].description }}</p>
+    </ion-item>
+  </div>
 </ion-content>
+
