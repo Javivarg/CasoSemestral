@@ -1,0 +1,12 @@
+
+
+si no esta instalado angular: npm install -g @angular/cli
+verificar version: ng version
+
+install scanner : npm install @capacitor-community/barcode-scanner
+
+generar archivos de produccion: ng build
+
+configura la carpeta webDir: npx cap sync
+
+reiniciar el servidor : ng serve
