@@ -11,7 +11,15 @@
     </ion-toolbar>
   </ion-header>
   
-  <h1 style="margin-left: 20%; margin-right: 20%;">NO DISPONIBLE</h1>
-  <img src="assest/img/triste.png" alt="Lo siento :c" class="imagen-perzonalizada">
+  <!-- Botón para iniciar el escaneo de QR -->
+  <ion-button expand="full" (click)="startScan()">
+    Escanear QR
+  </ion-button>
+
+  <!-- Mostrar los datos escaneados -->
+  <div *ngIf="scannedData">
+    <h2>Datos Escaneados:</h2>
+    <p>{{ scannedData }}</p>
+  </div>
   
 </ion-content>
