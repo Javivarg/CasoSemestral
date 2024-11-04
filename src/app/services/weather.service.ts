@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Geolocation } from '@capacitor/geolocation';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,14 @@ export class WeatherService {
 
   getWeather(city: string): Observable<any> {
     const url = `${this.apiUrl}?q=${city}&appid=${this.apiKey}&units=metric`;
+    return this.http.get(url);
+  }
+
+  async getWeatherByLocation():Promise<Observable<any>>{
+    const coordinates = await Geolocation.getCurrentPosition();
+    const lat = coordinates.coords.latitude;
+    const lon = coordinates.coords.longitude;
+    const url = `${this.apiUrl}?lat=${lat}&lon=${lon}&appid=${this.apiKey}&units=metric`
     return this.http.get(url);
   }
 }

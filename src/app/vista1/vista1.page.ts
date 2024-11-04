@@ -11,30 +11,35 @@ export class Vista1Page implements OnInit {
   nombre: string = '';
   apellido: string = '';
   weatherData: any;
-  city: string = 'Santiago'; // Ciudad predeterminada o puedes usar la del usuario
 
   constructor(private router: Router, private weatherService: WeatherService) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
     if (usuario && usuario.email) {
       this.nombre = usuario.nombre;
       this.apellido = usuario.apellido;
-      this.getWeather();  
+      await this.getWeather();  
     } else {
-      
       this.router.navigate(['/home']);
     }
   }
 
-  getWeather() {
-    this.weatherService.getWeather(this.city).subscribe(
-      (data) => {
-        this.weatherData = data;
-      },
-      (error) => {
-        console.error('Error fetching weather data:', error);
-      }
-    );
+  async getWeather() {
+    try {
+      const weatherObservable = await this.weatherService.getWeatherByLocation();
+      weatherObservable.subscribe(
+        (data) => {
+          this.weatherData = data;
+        },
+        (error) => {
+          console.error('Error fetching weather data by location:', error);
+        }
+      );
+    } catch (error) {
+      console.error('Error obtaining location:', error);
+    }
   }
+
+  
 }
