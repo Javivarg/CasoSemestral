@@ -5,6 +5,8 @@ verificar version: ng version
 
 install scanner : npm install @capacitor-community/barcode-scanner
 
+install geolocation : npm install @capacitor/geolocation@5
+
 generar archivos de produccion: ng build
 
 configura la carpeta webDir: npx cap sync
