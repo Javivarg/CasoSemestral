@@ -19,7 +19,7 @@ export class Vista1Page implements OnInit {
     if (usuario && usuario.email) {
       this.nombre = usuario.nombre;
       this.apellido = usuario.apellido;
-      await this.getWeather();  
+      await this.getWeather();
     } else {
       this.router.navigate(['/home']);
     }
@@ -41,5 +41,22 @@ export class Vista1Page implements OnInit {
     }
   }
 
-  
+  getWeatherIcon(): string {
+    const weatherCondition = this.weatherData?.weather[0].main.toLowerCase();
+
+    switch (weatherCondition) {
+      case 'clear':
+        return 'sunny-outline'; // Icono para clima despejado
+      case 'clouds':
+        return 'cloudy-outline'; // Icono para nublado
+      case 'rain':
+        return 'rainy-outline'; // Icono para lluvia
+      case 'snow':
+        return 'snow-outline'; // Icono para nieve
+      case 'thunderstorm':
+        return 'thunderstorm-outline'; // Icono para tormenta
+      default:
+        return 'partly-sunny-outline'; // Icono predeterminado
+    }
+  }
 }
