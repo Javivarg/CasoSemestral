@@ -6,11 +6,16 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="content-container">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Settings</ion-title>
-    </ion-toolbar>
-  </ion-header>
   <h1 style="display: flex; justify-content: center; align-items: center;">Ajustes</h1>
+  <div >
+    <ion-buttons slot="end" class="boton-ingresar">
+      <ion-button (click)="toggleTheme()">
+        <ion-icon name="moon" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </div>
+
   <ion-button expand="block" (click)="recuperar()" class="boton-restablecer" >Cerrar sesión</ion-button>
 </ion-content>
+
+
