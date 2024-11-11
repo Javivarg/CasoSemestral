@@ -27,7 +27,7 @@
 @import "@ionic/angular/css/palettes/dark.system.css";
 
 ion-toolbar {
-    --background: #083E71 !important;
+  --background: #083E71 !important;
 }
 
 // src/theme/global.scss
@@ -40,3 +40,24 @@ body {
     width: 50%;
     object-fit: contain; /* Asegura que la imagen mantenga su aspecto */
 }
+
+/* Global styles */
+:root {
+    --ion-background-color: #ffffff;
+    --ion-text-color: #000000;
+  }
+  
+  .dark {
+    --ion-background-color: #313233;
+    --ion-text-color: #ffffff;
+  }
+  
+  body {
+    background-color: var(--ion-background-color);
+    color: var(--ion-text-color);
+  }
+  
+  ion-content {
+    --background: var(--ion-background-color);
+  }
+  

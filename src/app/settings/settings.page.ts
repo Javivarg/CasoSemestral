@@ -14,8 +14,13 @@ export class SettingsPage implements OnInit {
   ngOnInit() {
   }
 
+  toggleTheme() {
+    document.body.classList.toggle('dark', !document.body.classList.contains('dark'));
+  }
+
   recuperar() {
     localStorage.removeItem('usuario'); // Elimina el usuario de LocalStorage
     this.router.navigate(['/home']); // Redirige a la página de inicio
   }
 }
+

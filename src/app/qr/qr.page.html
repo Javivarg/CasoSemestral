@@ -12,6 +12,17 @@
     </ion-toolbar>
   </ion-header>
 
+  <div>
+    <h2>Datos Escaneados:</h2>
+    <p>{{ scannedData }}</p>
+    <div class="botones-container">
+      <ion-button class="boton-ingresar1">Guardar asistencia</ion-button>
+      <ion-button expand="full" (click)="startScan()" class="boton-ingresar1">
+        Volver a escanear
+      </ion-button>
+    </div>
+  </div>
+
   <!-- Botón para iniciar el escaneo de QR -->
   <ion-button expand="full" (click)="startScan()" class="boton-ingresar">
     Escanear QR

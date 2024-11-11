@@ -29,8 +29,8 @@ ion-card h2, ion-card h3, ion-card p {
 
 .cards-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(25%, 1fr)); /* Crea columnas con un ancho mínimo de 300px */
-    gap: 16px; /* Espacio entre los cards */
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Crea columnas con un ancho mínimo de 300px */
+    gap: 10px; /* Espacio entre los cards */
 }
 
 .cards-container-asis {
@@ -38,8 +38,8 @@ ion-card h2, ion-card h3, ion-card p {
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Crea columnas con un ancho mínimo de 300px */
     gap: 16px; /* Espacio entre los cards */
 }
-  
-::ng-deep .boton-ingresar {
+
+.boton-ingresar {
     width: 150px;
     height: 50px;
     --background: #FDBA31; /* Color de fondo */
@@ -55,4 +55,12 @@ ion-card h2, ion-card h3, ion-card p {
 }
   
 
-  
+h2, h3 { 
+    margin: 0; 
+    padding: 10px; 
+   /* font-size: 2vw; /* Usar unidades relativas a la ventana de vista */ 
+    /*word-break: break-word; /* Permitir la ruptura de palabras largas */ 
+}
+.container { 
+    padding: 20px; 
+}
