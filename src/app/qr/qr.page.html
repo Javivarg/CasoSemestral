@@ -1,18 +1,19 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>qr</ion-title>
+    <!-- Imagen con una clase personalizada -->
+    <img src="assets/img/R.png" alt="DUOC UC" class="imagen-personalizada">
   </ion-toolbar>
 </ion-header>
-
+  
 <ion-content [fullscreen]="true" class="ion-padding">
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">qr</ion-title>
     </ion-toolbar>
   </ion-header>
-  
+
   <!-- Botón para iniciar el escaneo de QR -->
-  <ion-button expand="full" (click)="startScan()">
+  <ion-button expand="full" (click)="startScan()" class="boton-ingresar">
     Escanear QR
   </ion-button>
 
@@ -20,6 +21,12 @@
   <div *ngIf="scannedData">
     <h2>Datos Escaneados:</h2>
     <p>{{ scannedData }}</p>
+    <div class="botones-container">
+      <ion-button class="boton-ingresar1">Guardar asistencia</ion-button>
+      <ion-button expand="full" (click)="startScan()" class="boton-ingresar1">
+        Volver a escanear
+      </ion-button>
+    </div>
   </div>
   
 </ion-content>

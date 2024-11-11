@@ -1,13 +1,22 @@
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
 <ion-header>
   <ion-toolbar>
-    <ion-title>Vista 1</ion-title>
+    <!-- Imagen con una clase personalizada -->
+    <img src="assets/img/R.png" alt="DUOC UC" class="imagen-personalizada">
   </ion-toolbar>
 </ion-header>
-
+  
 <ion-content class="ion-padding">
   <!-- Api Clima-->
-  <div *ngIf="weatherData" class="ion-margin-top">
-    <ion-card>
+  <div *ngIf="weatherData" class="cards-container">
+    <div>
+      <h2>Bienvenido</h2>
+      <h3>{{ nombre }} {{ apellido }}</h3>
+    </div>
+    <ion-card class="ion-card-clima">
       <ion-card-header>
         <ion-card-title>
           <h3>Clima</h3>
@@ -20,20 +29,40 @@
       </ion-card-content>
     </ion-card>
   </div>
+  <div style="display: flex; justify-content: center; align-items: center;">
+    <h1>Asistencia</h1>
+  </div>
+  
+  <div class="cards-container-asis">
 
-  <!-- Saludo al usuario -->
-  <h2>Bienvenido {{ nombre }}</h2>
+    <ion-card class="ion-card-asis">
+      <ion-card-header>
+        <ion-card-title>
+          <h3>ASIGNATURA</h3>
+        </ion-card-title>
+      </ion-card-header>
 
-  <!-- Input para el nombre -->
-  <ion-item>
-    <ion-label position="floating">Nombre</ion-label>
-    <ion-input type="text" [(ngModel)]="nombre"></ion-input>
-  </ion-item>
+      <ion-card-content>
+        <p>Porcentaje Asistencia: 0%</p>
+        <p>clases asistidas: 0/10</p>
+      </ion-card-content>
+    </ion-card>
 
-  <!-- Input para el apellido -->
-  <ion-item>
-    <ion-label position="floating">Apellido</ion-label>
-    <ion-input type="text" [(ngModel)]="apellido"></ion-input>
-  </ion-item>
+    <ion-card class="ion-card-asis">
+      <ion-card-header>
+        <ion-card-title>
+          <h3>ASIGNATURA</h3>
+        </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <p>Porcentaje Asistencia: 0%</p>
+        <p>clases asistidas: 0/10</p>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+ 
+
 
 </ion-content>
