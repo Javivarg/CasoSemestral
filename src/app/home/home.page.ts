@@ -1,6 +1,8 @@
+// home.page.ts
 import { Component } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
 @Component({
   selector: 'app-home',
@@ -10,38 +12,24 @@ import { AlertController } from '@ionic/angular';
 export class HomePage {
   email: string = '';
   password: string = '';
-  selectedUser: any;
-
-  public lista = [
-    {
-      nombre: 'javier',
-      apellido: 'Vargas',
-      email: 'javier@gmail.com',
-      password: 'hola',
-    },
-    {
-      email: 'admin',
-      password: 'admin',
-      nombre: 'admin',
-      apellido: 'admin'
-    }
-  ];
 
   constructor(private navCtrl: NavController, private alertController: AlertController) {}
 
   async iniciarSesion() {
-    const usuario = this.lista.find(user => user.email === this.email && user.password === this.password);
-
-    if (usuario) {
+    const auth = getAuth();
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, this.email, this.password);
+      const usuario = userCredential.user;
+      
       // Guardar datos en LocalStorage
-      localStorage.setItem('usuario', JSON.stringify(usuario));
+      localStorage.setItem('usuario', JSON.stringify({ email: usuario.email }));
       this.navCtrl.navigateForward('/tabs/vista1', {
         queryParams: {
-          nombre: usuario.nombre,
-          apellido: usuario.apellido
+          nombre: usuario.displayName || 'Usuario',
+          email: usuario.email
         }
       });
-    } else {
+    } catch (error) {
       const alert = await this.alertController.create({
         header: 'Error',
         message: 'Usuario o contraseña incorrectos.',
@@ -51,14 +39,13 @@ export class HomePage {
     }
   }
 
-  // Agregar una función para verificar el inicio de sesión en la inicialización del componente
   ngOnInit() {
     const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
     if (usuario && usuario.email) {
       this.navCtrl.navigateForward('/vista1', {
         queryParams: {
-          nombre: usuario.nombre,
-          apellido: usuario.apellido
+          nombre: usuario.displayName || 'Usuario',
+          email: usuario.email
         }
       });
     }

@@ -10,7 +10,6 @@
 </ion-header>
 
 <ion-content class="ion-padding page-home">
-
   <br><br>
 
   <div class="login-header">
@@ -18,48 +17,25 @@
     <p>Por favor ingrese sus datos</p>
   </div>
 
-  <ion-item class="custom-input">
-    <ion-label>Selecciona Usuario</ion-label>
-    <ion-select [(ngModel)]="selectedUser">
-      <ion-select-option *ngFor="let user of lista" [value]="user">
-        {{ user.email }}
-      </ion-select-option>
-    </ion-select>
-  </ion-item>
-  <div *ngIf="selectedUser">
-    <p>Email: {{ selectedUser.email }}</p>
-    <p>Contraseña: {{ selectedUser.password }}</p>
-  </div>
-
-  <br><br>
-
-  <div class="">
-    <p>Correo Electronico</p>
-    <ion-input
+  <p>Correo Electronico</p>
+  <ion-input
     class="custom-input"
     fill="solid"
     placeholder="Introduce tu correo electrónico" 
-    errorText="Correo electrónico inválido"
     [(ngModel)]="email"
-    ></ion-input>
-    <p>Contraseña</p>
-    <ion-input
-      class="custom-input"
-      type="password"
-      fill="solid"
-      placeholder="Introduce tu contraseña" 
-      errorText="Invalid password"
-      [(ngModel)]="password"
-    ></ion-input>
-  </div>
+  ></ion-input>
+  <p>Contraseña</p>
+  <ion-input
+    class="custom-input"
+    type="password"
+    fill="solid"
+    placeholder="Introduce tu contraseña" 
+    [(ngModel)]="password"
+  ></ion-input>
 
   <br>
   <div class="botones-container">
     <ion-button class="boton-ingresar" (click)="iniciarSesion()">INGRESAR</ion-button>
     <ion-button class="boton-restablecer" routerLink="/reset-password">Restablecer Contraseña</ion-button>
   </div>
-  
-
-  <br><br>
-  
 </ion-content>
