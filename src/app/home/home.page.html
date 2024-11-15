@@ -1,4 +1,5 @@
 <head>
+  <!-- Importar la fuente Inter de Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 
@@ -10,30 +11,33 @@
 </ion-header>
 
 <ion-content class="ion-padding page-home">
-  <br><br>
-
   <div class="login-header">
     <h2>Iniciar Sesión</h2>
     <p>Por favor ingrese sus datos</p>
   </div>
 
-  <p>Correo Electronico</p>
+  <!-- Campo de correo electrónico -->
+  <p>Correo Electrónico</p>
   <ion-input
     class="custom-input"
     fill="solid"
-    placeholder="Introduce tu correo electrónico" 
+    placeholder="Introduce tu correo electrónico"
     [(ngModel)]="email"
   ></ion-input>
+
+  <!-- Campo de contraseña -->
   <p>Contraseña</p>
   <ion-input
     class="custom-input"
     type="password"
     fill="solid"
-    placeholder="Introduce tu contraseña" 
+    placeholder="Introduce tu contraseña"
     [(ngModel)]="password"
   ></ion-input>
 
   <br>
+
+  <!-- Botones para ingresar y restablecer contraseña -->
   <div class="botones-container">
     <ion-button class="boton-ingresar" (click)="iniciarSesion()">INGRESAR</ion-button>
     <ion-button class="boton-restablecer" routerLink="/reset-password">Restablecer Contraseña</ion-button>
