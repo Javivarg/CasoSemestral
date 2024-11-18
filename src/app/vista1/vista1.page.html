@@ -33,21 +33,22 @@
     <h1>Asistencia</h1>
   </div>
   
-  <div class="cards-container-asis">
-
-    <ion-card class="ion-card-asis">
+  <ion-list>
+    <ion-card *ngFor="let asignatura of asignaturas" class="ion-card-asis">
       <ion-card-header>
         <ion-card-title>
-          <h3>ASIGNATURA</h3>
+          <h3>{{ asignatura.nombre }}</h3>
         </ion-card-title>
       </ion-card-header>
 
       <ion-card-content>
+        <p>Sigla: {{ asignatura.sigla }}</p>
+        <p>Sección: {{ asignatura.seccion }}</p>
         <p>Porcentaje Asistencia: 0%</p>
-        <p>clases asistidas: 0/10</p>
+        <p>Clases asistidas: 0/10</p>
       </ion-card-content>
     </ion-card>
-  </div>
+  </ion-list>
 
  
 
