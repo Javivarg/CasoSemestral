@@ -1,6 +1,4 @@
-// home.page.ts
-
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http'; // Importa HttpClient para realizar peticiones HTTP
@@ -10,7 +8,7 @@ import { HttpClient } from '@angular/common/http'; // Importa HttpClient para re
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit {
   email: string = '';
   password: string = '';
 
@@ -20,6 +18,7 @@ export class HomePage {
     private http: HttpClient // Inyecta HttpClient para realizar solicitudes HTTP
   ) {}
 
+  // Método para iniciar sesión
   async iniciarSesion() {
     try {
       // Realiza la solicitud POST a la API para verificar las credenciales
@@ -37,7 +36,7 @@ export class HomePage {
           userData: response.user
         }));
 
-        // Navegar a la siguiente vista
+        // Navegar a la vista1 después de inicio de sesión exitoso
         this.navCtrl.navigateForward('/tabs/vista1', {
           queryParams: {
             nombre: response.user.nombre || 'Usuario',
@@ -64,9 +63,11 @@ export class HomePage {
     }
   }
 
+  // Método para comprobar si el usuario ya está autenticado
   ngOnInit() {
     const usuario = JSON.parse(localStorage.getItem('usuario') || 'null');
     if (usuario && usuario.email && usuario.userData) {
+      // Si el usuario ya está autenticado, redirige a vista1
       this.navCtrl.navigateForward('/tabs/vista1', {
         queryParams: {
           nombre: usuario.userData.nombre || 'Usuario',
