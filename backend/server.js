@@ -11,10 +11,10 @@ app.use(bodyParser.json());
 
 // Configuración de la conexión a MySQL
 const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'caso_semestral'
+    host: 'sql10.freemysqlhosting.net',
+    user: 'sql10746779',
+    password: 'FmXS5ZjSwz',
+    database: 'sql10746779'
 });
 
 db.connect((err) => {
@@ -63,6 +63,9 @@ app.get('/asignaturas/:usuarioRut', (req, res) => {
 });
 
 // Inicia el servidor en el puerto 3000
-app.listen(3000, () => {
-    console.log('Servidor Express en el puerto 3000');
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+    console.log(`Servidor escuchando en el puerto ${PORT}`);
 });
+
