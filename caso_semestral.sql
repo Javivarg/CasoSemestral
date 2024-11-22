@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-11-2024 a las 03:25:51
+-- Tiempo de generación: 22-11-2024 a las 19:19:38
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -28,19 +28,20 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `asignatura` (
+  `id` int(11) NOT NULL,
   `sigla` varchar(8) NOT NULL,
   `seccion` varchar(8) NOT NULL,
-  `nombre` varchar(50) NOT NULL,
-  `alumno` int(8) DEFAULT NULL,
-  `profesor` int(8) DEFAULT NULL
+  `nombre` varchar(500) NOT NULL,
+  `alumno` int(11) DEFAULT NULL,
+  `profesor` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `asignatura`
 --
 
-INSERT INTO `asignatura` (`sigla`, `seccion`, `nombre`, `alumno`, `profesor`) VALUES
-('PGY4121', '012D', 'Programacion de aplicaciones moviles', 20390785, 18784135);
+INSERT INTO `asignatura` (`id`, `sigla`, `seccion`, `nombre`, `alumno`, `profesor`) VALUES
+(1, 'PGY4121', '012D', 'Programación de aplicaciones móviles', 20390785, 18784135);
 
 -- --------------------------------------------------------
 
@@ -52,7 +53,7 @@ CREATE TABLE `asistencia` (
   `fecha` date NOT NULL,
   `hora` time NOT NULL,
   `alumno` int(8) DEFAULT NULL,
-  `sigla` varchar(8) DEFAULT NULL
+  `sigla` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -111,7 +112,7 @@ INSERT INTO `usuario` (`rut`, `dv_rut`, `pnombre`, `snombre`, `apaterno`, `amate
 -- Indices de la tabla `asignatura`
 --
 ALTER TABLE `asignatura`
-  ADD PRIMARY KEY (`sigla`),
+  ADD PRIMARY KEY (`id`),
   ADD KEY `alumno` (`alumno`),
   ADD KEY `profesor` (`profesor`);
 
@@ -135,6 +136,16 @@ ALTER TABLE `usuario`
   ADD PRIMARY KEY (`rut`);
 
 --
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `asignatura`
+--
+ALTER TABLE `asignatura`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- Restricciones para tablas volcadas
 --
 
@@ -150,7 +161,7 @@ ALTER TABLE `asignatura`
 --
 ALTER TABLE `asistencia`
   ADD CONSTRAINT `asistencia_ibfk_1` FOREIGN KEY (`alumno`) REFERENCES `usuario` (`rut`),
-  ADD CONSTRAINT `asistencia_ibfk_2` FOREIGN KEY (`sigla`) REFERENCES `asignatura` (`sigla`);
+  ADD CONSTRAINT `asistencia_ibfk_2` FOREIGN KEY (`sigla`) REFERENCES `asignatura` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
