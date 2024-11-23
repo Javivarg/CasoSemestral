@@ -7,7 +7,7 @@ const routes: Routes = [
   {
     path: '',
     component: TabsPage,
-    children:[
+    children: [
       {
         path: 'vista1',
         loadChildren: () => import('../vista1/vista1.module').then(m => m.Vista1PageModule)
@@ -19,6 +19,11 @@ const routes: Routes = [
       {
         path: 'settings',
         loadChildren: () => import('../settings/settings.module').then(m => m.SettingsPageModule)
+      },
+      {
+        path: '', // Ruta predeterminada
+        redirectTo: 'vista1',
+        pathMatch: 'full'
       }
     ]
   }
