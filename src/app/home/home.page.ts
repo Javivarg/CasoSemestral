@@ -21,10 +21,11 @@ export class HomePage implements OnInit {
 
   async iniciarSesion() {
     try {
-      const response: any = await firstValueFrom(this.http.post('https://caso-semestral.vercel.app/login', {
+      const response: any = await firstValueFrom(this.http.post('https://caso-semestral.vercel.app/api/login', {
         email: this.email,
         password: this.password
       }));
+      
 
       console.log('Respuesta del servidor:', response);
 

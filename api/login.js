@@ -1,38 +1,44 @@
-import mysql from 'mysql2';
+// server.js
 
-const connection = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME
+const express = require('express');
+const mysql = require('mysql');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+
+const app = express();
+app.use(cors());
+app.use(bodyParser.json());
+
+// Configuración de la conexión a MySQL
+const db = mysql.createConnection({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
 });
 
-// Verifica si la conexión a la base de datos es exitosa
-connection.connect((err) => {
-  if (err) {
-    console.error('Error al conectar con la base de datos:', err);
-    return;
-  }
-  console.log('Conexión exitosa con la base de datos');
+db.connect((err) => {
+    if (err) throw err;
+    console.log('Conectado a MySQL');
 });
 
-// Tu lógica para manejar las solicitudes sigue aquí...
-export default async function handler(req, res) {
-  if (req.method === 'POST') {
+// Ruta para iniciar sesión
+app.post('/api/login', (req, res) => {
     const { email, password } = req.body;
+    const sql = `SELECT * FROM usuario WHERE email = ? AND password = ?`;
+    db.query(sql, [email, password], (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).send({ message: 'Error en la consulta' });
+        }
 
-    connection.query('SELECT * FROM users WHERE email = ? AND password = ?', [email, password], (err, results) => {
-      if (err) {
-        console.error('Error en la consulta a la base de datos:', err);
-        return res.status(500).json({ message: 'Error en la base de datos' });
-      }
-      if (results.length > 0) {
-        return res.status(200).json({ message: 'Inicio de sesión exitoso', user: results[0] });
-      } else {
-        return res.status(401).json({ message: 'Credenciales inválidas' });
-      }
+        if (results.length > 0) {
+            res.status(200).send({ message: 'Inicio de sesión exitoso', user: results[0] });
+        } else {
+            res.status(401).send({ message: 'Credenciales incorrectas' });
+        }
     });
-  } else {
-    return res.status(405).json({ message: 'Método no permitido' });
-  }
-}
+});
+
+// Exporta el `app` para Vercel
+module.exports = app;
