@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
-import { HttpClient } from '@angular/common/http'; // Importa HttpClient para realizar peticiones HTTP
+import { HttpClient } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -13,38 +14,33 @@ export class HomePage implements OnInit {
   password: string = '';
 
   constructor(
-    private navCtrl: NavController,
     private alertController: AlertController,
-    private http: HttpClient // Inyecta HttpClient para realizar solicitudes HTTP
+    private http: HttpClient,
+    private router: Router
   ) {}
 
-  // Método para iniciar sesión
   async iniciarSesion() {
     try {
-      // Realiza la solicitud POST a la API para verificar las credenciales
-      const response: any = await this.http.post('http://localhost:3000/login', {
+      const response: any = await firstValueFrom(this.http.post('https://caso-semestral.vercel.app/login', {
         email: this.email,
         password: this.password
-      }).toPromise();
+      }));
 
-      console.log('Respuesta del servidor:', response); // Verifica lo que el servidor responde
+      console.log('Respuesta del servidor:', response);
 
-      if (response.message === 'Inicio de sesión exitoso') {
-        // Guardar datos en LocalStorage
+      if (response?.message === 'Inicio de sesión exitoso') {
         localStorage.setItem('usuario', JSON.stringify({
           email: this.email,
           userData: response.user
         }));
 
-        // Navegar a la vista1 después de inicio de sesión exitoso
-        this.navCtrl.navigateForward('/tabs/vista1', {
+        this.router.navigate(['/tabs/vista1'], {
           queryParams: {
             nombre: response.user.nombre || 'Usuario',
             email: this.email
           }
         });
       } else {
-        // Muestra un mensaje de error si la autenticación falla
         const alert = await this.alertController.create({
           header: 'Error',
           message: response.message,
@@ -53,7 +49,7 @@ export class HomePage implements OnInit {
         await alert.present();
       }
     } catch (error) {
-      // Muestra un mensaje de error si ocurre un problema de conexión
+      console.error('Error al iniciar sesión:', error);
       const alert = await this.alertController.create({
         header: 'Error',
         message: 'Error en la conexión al servidor.',
@@ -63,12 +59,10 @@ export class HomePage implements OnInit {
     }
   }
 
-  // Método para comprobar si el usuario ya está autenticado
   ngOnInit() {
     const usuario = JSON.parse(localStorage.getItem('usuario') || 'null');
     if (usuario && usuario.email && usuario.userData) {
-      // Si el usuario ya está autenticado, redirige a vista1
-      this.navCtrl.navigateForward('/tabs/vista1', {
+      this.router.navigate(['/tabs/vista1'], {
         queryParams: {
           nombre: usuario.userData.nombre || 'Usuario',
           email: usuario.email

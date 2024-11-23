@@ -3,5 +3,12 @@
   "integrations": {
     "capacitor": {}
   },
+  "proxies": [
+    {
+      "path": "/login",
+      "proxyUrl": "http://caso-semestral.vercel.app/login"
+    }
+  ],
   "type": "angular"
 }
+
