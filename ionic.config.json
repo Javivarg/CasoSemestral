@@ -5,8 +5,8 @@
   },
   "proxies": [
     {
-      "path": "/login",
-      "proxyUrl": "http://caso-semestral.vercel.app/login"
+      "path": "api/login",
+      "proxyUrl": "http://caso-semestral.vercel.app/api/login"
     }
   ],
   "type": "angular"

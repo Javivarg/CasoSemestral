@@ -84,7 +84,9 @@ export class Vista1Page implements OnInit {
         }
         console.log('Asignaturas cargadas:', this.asignaturas);
       },
-
+      (error) => {
+        console.error('Error al cargar las asignaturas:', error);
+      }
     );
   }
 
