@@ -7,13 +7,23 @@ const connection = mysql.createConnection({
   database: process.env.DB_NAME
 });
 
+// Verifica si la conexión a la base de datos es exitosa
+connection.connect((err) => {
+  if (err) {
+    console.error('Error al conectar con la base de datos:', err);
+    return;
+  }
+  console.log('Conexión exitosa con la base de datos');
+});
+
+// Tu lógica para manejar las solicitudes sigue aquí...
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     const { email, password } = req.body;
 
     connection.query('SELECT * FROM users WHERE email = ? AND password = ?', [email, password], (err, results) => {
       if (err) {
-        console.error('Database error:', err);
+        console.error('Error en la consulta a la base de datos:', err);
         return res.status(500).json({ message: 'Error en la base de datos' });
       }
       if (results.length > 0) {
