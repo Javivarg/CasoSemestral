@@ -11,27 +11,38 @@ const db = mysql.createConnection({
 
 app.use(cors());
 // Función para manejar la solicitud POST
-module.exports = async (req, res) => {
-  if (req.method === 'POST') {
-    const { email, password } = req.body;
-
-    const sql = 'SELECT * FROM usuario WHERE email = ? AND password = ?';
-    db.query(sql, [email, password], (err, results) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).json({ message: 'Error en la consulta' });
+// api/login.js
+export default async function handler(req, res) {
+    if (req.method === 'POST') {
+      const { email, password } = req.body;
+  
+      if (!email || !password) {
+        return res.status(400).json({ message: 'Email y contraseña son requeridos' });
       }
-
-      if (results.length > 0) {
-        // Si las credenciales coinciden
-        res.status(200).json({ message: 'Inicio de sesión exitoso', user: results[0] });
-      } else {
-        // Si las credenciales no son correctas
-        res.status(401).json({ message: 'Credenciales incorrectas' });
+  
+      try {
+        // Aquí debes agregar la lógica de autenticación
+        const user = await authenticateUser(email, password); // Implementa tu función de autenticación
+        if (user) {
+          return res.status(200).json({ message: 'Inicio de sesión exitoso', user });
+        } else {
+          return res.status(401).json({ message: 'Credenciales inválidas' });
+        }
+      } catch (error) {
+        console.error('Error en la autenticación:', error);
+        return res.status(500).json({ message: 'Error en el servidor' });
       }
-    });
-  } else {
-    // Si no es un POST, responder con un error
-    res.status(405).json({ message: 'Método no permitido' });
+    } else {
+      return res.status(405).json({ message: 'Método no permitido' });
+    }
   }
-};
+  
+  async function authenticateUser(email, password) {
+    // Aquí implementas tu lógica de autenticación
+    // Por ejemplo, verificando contra una base de datos o un servicio externo
+    if (email === 'test@example.com' && password === 'password123') {
+      return { nombre: 'John Doe' };
+    }
+    return null;
+  }
+  
