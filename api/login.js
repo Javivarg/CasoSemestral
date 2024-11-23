@@ -8,6 +8,8 @@ const db = mysql.createConnection({
   database: 'sql10746779',
 });
 
+
+app.use(cors());
 // Función para manejar la solicitud POST
 module.exports = async (req, res) => {
   if (req.method === 'POST') {

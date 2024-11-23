@@ -11,11 +11,11 @@ app.use(bodyParser.json());
 
 // Configuración de la conexión a MySQL
 const db = mysql.createConnection({
-    host: 'sql10.freemysqlhosting.net',
-    user: 'sql10746779',
-    password: 'FmXS5ZjSwz',
-    database: 'sql10746779'
-});
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: 'sql10746779',
+  });
 
 db.connect((err) => {
     if (err) throw err;
