@@ -39,7 +39,7 @@ export class Vista1Page implements OnInit {
       this.cargarAsignaturas(userData.rut);
     } else {
       console.log('No se encontró usuario en el localStorage');
-      this.router.navigate(['/home']);
+      
     }
   }
 
