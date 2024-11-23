@@ -61,7 +61,25 @@ app.get('/asignaturas/:usuarioRut', (req, res) => {
         res.status(200).send(results);
     });
 });
+// Ruta para obtener asignaturas por alumno
+app.get('/api/asignaturas/:usuarioRut', (req, res) => {
+    const alumnoId = req.params.usuarioRut;
 
+    const sql = `
+        SELECT a.sigla, a.seccion, a.nombre
+        FROM asignatura a
+        JOIN usuario u ON a.alumno = u.rut
+        WHERE u.rut = ?
+    `;
+
+    db.query(sql, [alumnoId], (err, results) => {
+        if (err) {
+            console.error('Error al obtener las asignaturas:', err);
+            return res.status(500).send({ message: 'Error al obtener las asignaturas' });
+        }
+        res.status(200).send(results);
+    });
+});
 // Inicia el servidor en el puerto 3000
 const PORT = process.env.PORT || 3000;
 

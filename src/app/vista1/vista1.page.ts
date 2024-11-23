@@ -75,7 +75,7 @@ export class Vista1Page implements OnInit {
   }
 
   cargarAsignaturas(rut: number) {
-    this.http.get(`https://caso-semestral.vercel.app/asignaturas/${rut}`).subscribe(
+    this.http.get(`https://caso-semestral.vercel.app/api/asignaturas/${rut}`).subscribe(
       (data: any) => {
         if (Array.isArray(data)) {
           this.asignaturas = data;
