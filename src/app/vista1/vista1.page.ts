@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { WeatherService } from '../services/weather.service';
-import { OpencageService } from '../services/opencage.service'; // Importa el servicio de OpenCage
-import { HttpClient } from '@angular/common/http';
-
-
+import { OpencageService } from '../services/opencage.service';
 
 @Component({
   selector: 'app-vista1',
@@ -16,39 +13,36 @@ export class Vista1Page implements OnInit {
   nombre: string = ''; // Nombre del usuario
   apellido: string = ''; // Apellido del usuario
   weatherData: any; // Datos del clima
-  asignaturas: any[] = []; // Lista de asignaturas del alumno
+  asignaturas: any[] = []; // Lista de asignaturas del alumno (local)
 
   constructor(
     private router: Router,
     private weatherService: WeatherService,
-    private opencageService: OpencageService, // Inyecta el servicio de OpenCage
-    private http: HttpClient, // Cliente HTTP para llamadas a la API// Servicio para obtener el clima
+    private opencageService: OpencageService // Inyecta el servicio de OpenCage
   ) {}
 
   async ngOnInit() {
-    // Obtiene el usuario desde el localStorage
     const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
-    
+
     if (usuario && usuario.email) {
-      const userData = usuario.userData;
-    
-      // Combina los nombres y apellidos
-      this.nombre = userData.pnombre + ' ' + userData.snombre;
-      this.apellido = userData.apaterno + ' ' + userData.amaterno;
-      
-      // Imprime los datos en la consola
+      this.nombre = 'Administrador';
+      this.apellido = '';
+
       console.log('Usuario encontrado:', usuario);
       console.log('Nombre completo:', this.nombre);
-      console.log('Apellido completo:', this.apellido);
-      
+
       // Llama al método para obtener el clima
       await this.getWeather();
-      
-      // Llama al método para cargar las asignaturas
-      this.cargarAsignaturas(userData.rut);
-  
+
+      // Asignaturas locales (puedes adaptarlas según necesites)
+      this.asignaturas = [
+        { sigla: 'MAT101', nombre: 'Matemáticas Básicas', seccion: '002D' },
+        { sigla: 'HIS202', nombre: 'Historia Universal', seccion: '015D' },
+        { sigla: 'PGY4121', nombre: 'Programación Aplicación Móviles', seccion: '012D' },
+      ];
+
+      console.log('Asignaturas cargadas localmente:', this.asignaturas);
     } else {
-      // Si no se encuentra el usuario, redirige a la página de inicio
       console.log('No se encontró usuario en el localStorage');
       this.router.navigate(['/home']);
     }
@@ -79,47 +73,35 @@ export class Vista1Page implements OnInit {
           );
         },
         (error) => {
-          console.error('Error fetching weather data by location:', error);
+          console.error('Error obteniendo el clima:', error);
         }
       );
     } catch (error) {
-      console.error('Error obtaining location:', error);
+      console.error('Error obteniendo ubicación:', error);
     }
   }
 
-    // Cargar asignaturas del alumno desde el servidor
-    cargarAsignaturas(rut: number) {
-      this.http.get(`http://localhost:3000/asignaturas/${rut}`).subscribe(
-        (data: any) => {
-          if (Array.isArray(data)) {
-            this.asignaturas = data; // Asignar asignaturas si la respuesta es un array
-          } else {
-            console.error('La respuesta no es un array:', data);
-          }
-          console.log('Asignaturas cargadas:', this.asignaturas);
-        },
-        (error) => {
-          console.error('Error al cargar las asignaturas:', error);
-        }
-      );
+  // Nueva función para obtener el ícono basado en el clima
+  getWeatherIcon(): string {
+    if (!this.weatherData) {
+      return 'cloud'; // Ícono predeterminado si no hay datos
     }
 
-  getWeatherIcon(): string {
-    const weatherCondition = this.weatherData?.weather[0].main.toLowerCase();
+    const weatherCondition = this.weatherData.weather[0].main.toLowerCase();
 
     switch (weatherCondition) {
       case 'clear':
-        return 'sunny-outline'; // Icono para clima despejado
+        return 'sunny'; // Ícono de sol
       case 'clouds':
-        return 'cloudy-outline'; // Icono para nublado
+        return 'cloud'; // Ícono de nube
       case 'rain':
-        return 'rainy-outline'; // Icono para lluvia
+        return 'rainy'; // Ícono de lluvia
       case 'snow':
-        return 'snow-outline'; // Icono para nieve
+        return 'snow'; // Ícono de nieve
       case 'thunderstorm':
-        return 'thunderstorm-outline'; // Icono para tormenta
+        return 'thunderstorm'; // Ícono de tormenta
       default:
-        return 'partly-sunny-outline'; // Icono predeterminado
+        return 'cloud'; // Ícono predeterminado
     }
   }
 }

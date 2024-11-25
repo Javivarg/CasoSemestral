@@ -1,32 +1,18 @@
 <ion-header>
   <ion-toolbar>
-    <!-- Imagen con una clase personalizada -->
-    <img src="assets/img/R.png" alt="DUOC UC" class="imagen-personalizada">
+    <ion-title>Escanear QR</ion-title>
   </ion-toolbar>
 </ion-header>
-  
-<ion-content [fullscreen]="true" class="ion-padding">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">qr</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
-  <!-- Botón para iniciar el escaneo de QR -->
-  <ion-button expand="full" (click)="startScan()" class="boton-ingresar">
-    Escanear QR
-  </ion-button>
+<ion-content>
+  <ion-button (click)="startScan()">Iniciar Escaneo</ion-button>
+  <ion-button (click)="stopScan()">Detener Escaneo</ion-button>
 
-  <!-- Mostrar los datos escaneados -->
-  <div *ngIf="scannedData">
-    <h2>Datos Escaneados:</h2>
-    <p>{{ scannedData }}</p>
-    <div class="botones-container">
-      <ion-button class="boton-ingresar1">Guardar asistencia</ion-button>
-      <ion-button expand="full" (click)="startScan()" class="boton-ingresar1">
-        Volver a escanear
-      </ion-button>
-    </div>
+  <div *ngIf="sigla && seccion && sala && fecha">
+    <h2>Detalles escaneados:</h2>
+    <p><strong>Sigla:</strong> {{ sigla }}</p>
+    <p><strong>Sección:</strong> {{ seccion }}</p>
+    <p><strong>Sala:</strong> {{ sala }}</p>
+    <p><strong>Fecha:</strong> {{ fecha }}</p>
   </div>
-  
 </ion-content>

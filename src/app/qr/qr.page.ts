@@ -1,44 +1,55 @@
-import { Component, OnInit } from '@angular/core';
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 
-@Component({
-  selector: 'app-qr',
-  templateUrl: './qr.page.html',
-  styleUrls: ['./qr.page.scss'],
-})
-export class QrPage implements OnInit {
+export class ScannerPage {
+  scannedData: string = '';
+  sigla: string = '';
+  seccion: string = '';
+  sala: string = '';
+  fecha: string = '';
 
-  scannedData: string | null = null; // Variable para almacenar los datos escaneados
-
-  constructor() { }
-
-  ngOnInit() {}
-
+  // Método para iniciar el escaneo
   async startScan() {
-    // Verifica y solicita permisos para acceder a la cámara
-    const permission = await BarcodeScanner.checkPermission({ force: true });
-    
-    if (permission.granted) {
-      // Oculta el fondo para que el escáner se ejecute en pantalla completa
-      BarcodeScanner.hideBackground();
+    // Inicia el escaneo de QR
+    const result = await BarcodeScanner.startScan();
 
-      const result = await BarcodeScanner.startScan(); // Inicia el escáner
-
-      // Verifica si hay contenido escaneado
-      if (result.hasContent) {
-        this.scannedData = result.content; // Guarda el contenido del código QR escaneado
-        console.log('Scanned data:', this.scannedData);
-      }
-
-      // Muestra el fondo nuevamente cuando termina el escaneo
-      BarcodeScanner.showBackground();
+    if (result.hasContent) {
+      this.scannedData = result.content || '';
+      this.processScannedData(this.scannedData);  // Procesar los datos escaneados
+      console.log('Datos escaneados:', this.scannedData);
     } else {
-      console.log('No se otorgaron permisos para usar la cámara.');
+      console.log('No se detectó contenido en el código QR.');
     }
   }
 
-  // Método para detener el escáner (opcional)
+  // Método para procesar los datos escaneados
+  processScannedData(data: string) {
+    // Suponiendo que el formato es "PGY4121|012D|L9|20241104"
+    const parts = data.split('|');
+    
+    if (parts.length === 4) {
+      this.sigla = parts[0];
+      this.seccion = parts[1];
+      this.sala = parts[2];
+      this.fecha = this.formatDate(parts[3]);  // Formatear la fecha
+    } else {
+      console.error('Formato de QR inválido');
+    }
+  }
+
+  // Método para formatear la fecha (de formato YYYYMMDD a DD/MM/YYYY)
+  formatDate(date: string): string {
+    if (date.length === 8) {
+      const year = date.substring(0, 4);
+      const month = date.substring(4, 6);
+      const day = date.substring(6, 8);
+      return `${day}/${month}/${year}`;
+    }
+    return 'Fecha inválida';  // Devolver un valor predeterminado si la fecha no tiene el formato esperado
+  }
+
+  // Método para detener el escaneo
   stopScan() {
     BarcodeScanner.stopScan();
+    BarcodeScanner.hideBackground();
   }
 }
